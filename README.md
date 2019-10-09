@@ -6,4 +6,5 @@ A tool to help penetrate your website for directories that may be vulnerable to 
 
 Add your wordlist to words.dat
 
+## Demonstration
 ![Image](https://raw.githubusercontent.com/wkdwilliams/LewScanner/master/dem.gif)
