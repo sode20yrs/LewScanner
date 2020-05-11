@@ -19,16 +19,21 @@ function hostOnline($url)
     return @fopen($url, 'r');
 }
 
-function directoryExists($url)
+function getHTTPCode($url)
 {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_NOBODY, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    curl_exec($ch);
+    $f = curl_exec($ch);
     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
     return $httpcode;
+}
+
+function httpIsRedirect($url)
+{
+    return str_split(getHTTPCode($url))[0] == 3;
 }

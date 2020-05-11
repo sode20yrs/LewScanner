@@ -29,6 +29,13 @@ if (!hostOnline($argv[1]))
   return;
 }
 
+// If we get a redirection
+if(httpIsRedirect($argv[1]))
+{
+    $argv[1] = str_replace("https://", "https://www.", $argv[1]);
+    $argv[1] = str_replace("http://", "http://www.", $argv[1]);
+}
+
 $words = file_get_contents(__DIR__."/words.dat");
 $words = explode("\n", $words);
 unset($words[count($words)-1]);
@@ -38,6 +45,7 @@ $found = [];
 
 foreach ($words as $key => $value)
 {
+  if(substr($value, -1) != "/") $value .= "/";
 
   echo PHP_EOL;
 
@@ -47,8 +55,8 @@ foreach ($words as $key => $value)
 
   echo PHP_EOL . "* Scanning: " . (number_format((float)($key+1)/count($words)*100, 2, '.', '')) . "% Done. Found: ". count($found) , PHP_EOL.PHP_EOL;
 
-  if(directoryExists($argv[1] . $value) != 404) {
-    $found[] = $argv[1] . $value;
+  if(getHTTPCode($argv[1] . $value) != 404) {
+    $found[] = $argv[1] . $value . (httpIsRedirect($argv[1] . $value) ? " (".getHTTPCode($argv[1] . $value) . " Redirected)" : "");
   }
 
   system("clear");
