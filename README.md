@@ -1,5 +1,5 @@
 # LewScanner
-A tool to help penetrate your website for directories that may be vulnerable to exploitation
+A tool to help penetrate your website, and scan for sensitive directories that may be vulnerable to exploitation. Directories such as **/admin** should be more hidden and less accessible!
 
 ## Usage
 ./scan.php https://target.com/
